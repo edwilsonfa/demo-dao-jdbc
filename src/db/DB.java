@@ -21,6 +21,16 @@ public class DB {
         return conn;
     }
 
+    private static Properties loadProperties() {
+        try (FileInputStream fs = new FileInputStream("db.properties")) {
+            Properties props = new Properties();
+            props.load(fs);
+            return props;
+        } catch (IOException e) {
+            throw new DBException(e.getMessage());
+        }
+    }
+
     public static void closeConnection() {
         if (conn != null) {
             try {
@@ -32,15 +42,7 @@ public class DB {
     }
 
 
-    private static Properties loadProperties() {
-        try (FileInputStream fs = new FileInputStream("db.properties")) {
-            Properties props = new Properties();
-            props.load(fs);
-            return props;
-        } catch (IOException e) {
-            throw new DBException(e.getMessage());
-        }
-    }
+
 
     public static void closeStatement(Statement st) {
         if (st != null) {
